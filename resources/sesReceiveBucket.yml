@@ -1,0 +1,23 @@
+Type: AWS::S3::Bucket
+Properties:
+  BucketName: ${self:service}-${self:provider.stage}-ses-fun-email
+  # VersioningConfiguration:
+  #   Status: Enabled
+  BucketEncryption:
+    ServerSideEncryptionConfiguration:
+      - ServerSideEncryptionByDefault:
+          SSEAlgorithm: AES256
+  # # Cors Policy Configuration
+  # CorsConfiguration:
+  #   CorsRules:
+  #     - AllowedHeaders:
+  #         - "*"
+  #       AllowedMethods:
+  #         - GET
+  #         - PUT
+  #         - POST
+  #         - HEAD
+  #         - DELETE
+  #       AllowedOrigins:
+  #         - "*"
+  #       MaxAge: 3000

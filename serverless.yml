@@ -1,0 +1,28 @@
+service: emailfun
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage ,'development'}
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "s3:*"
+            - "ses:*"
+          Resource: "*"
+
+functions:
+  funEmailBucketTrigger:
+    handler: src/index.handler
+    events:
+      - s3:
+          bucket: !Ref sesFunEmail
+          event: s3:ObjectCreated:*
+          existing: true
+
+resources:
+  Resources:
+    sesFunEmail: ${file(./resources/sesReceiveBucket.yml)}
